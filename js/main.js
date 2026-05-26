@@ -25,6 +25,17 @@ function closeModal() {
   document.getElementById("modal-overlay").classList.remove("active");
 }
 
+// ===== Spotlight Effect (mouse-tracking glow) =====
+document.querySelectorAll(".service-row").forEach(function (row) {
+  row.addEventListener("mousemove", function (e) {
+    var rect = row.getBoundingClientRect();
+    var x = ((e.clientX - rect.left) / rect.width) * 100;
+    var y = ((e.clientY - rect.top) / rect.height) * 100;
+    row.style.setProperty("--spot-x", x + "%");
+    row.style.setProperty("--spot-y", y + "%");
+  });
+});
+
 // ===== Event Listeners =====
 
 // Close modal when clicking outside

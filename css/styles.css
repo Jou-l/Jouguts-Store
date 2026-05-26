@@ -1,6 +1,16 @@
 /* ===== Google Fonts ===== */
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Orbitron:wght@700;900&family=Inter:wght@400;600;700&display=swap');
 
+/* ===== Dark Veil Background ===== */
+#dark-veil {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+}
+
 /* ===== Global Reset ===== */
 * {
   margin: 0;
@@ -15,39 +25,16 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Inter', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ===== Poster Card ===== */
 .poster {
-  width: 900px;
-  background: linear-gradient(145deg, #06091a 0%, #0a0f28 50%, #06091a 100%);
-  border: 1px solid rgba(200, 30, 30, 0.35);
-  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
   padding: 26px 28px 28px;
   position: relative;
-  overflow: hidden;
-}
-
-.poster::before {
-  content: '';
-  position: absolute;
-  top: -200px;
-  left: -200px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(200, 30, 30, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.poster::after {
-  content: '';
-  position: absolute;
-  bottom: -200px;
-  right: -200px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(180, 0, 0, 0.10) 0%, transparent 70%);
-  pointer-events: none;
+  z-index: 1;
 }
 
 /* ===== Header ===== */
@@ -59,7 +46,7 @@ body {
 }
 
 .logo-img {
-  height: 100px;
+  height: 125px;
   width: auto;
   display: block;
   margin: 0 auto;
@@ -68,13 +55,28 @@ body {
 }
 
 .tagline {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 5px;
-  color: rgba(255, 180, 180, 0.45);
+  color: rgba(255, 180, 180, 0.85);
   text-transform: uppercase;
   margin-top: 4px;
   font-family: 'Rajdhani', sans-serif;
   font-weight: 600;
+}
+
+.shiny-text {
+  display: inline-block;
+  background-image: linear-gradient(120deg, rgba(255,180,180,0.85) 0%, rgba(255,180,180,0.85) 35%, #fff 50%, rgba(255,180,180,0.85) 65%, rgba(255,180,180,0.85) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 150% center; }
+  100% { background-position: -50% center; }
 }
 
 /* ===== Divider ===== */
@@ -95,6 +97,8 @@ body {
 
 /* ===== Service Row ===== */
 .service-row {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -105,11 +109,36 @@ body {
   gap: 10px;
   min-height: 50px;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.service-row:hover {
+  transform: scale(1.03);
+}
+
+.service-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(400px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255, 255, 255, 0.08), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.service-row:hover::before {
+  opacity: 1;
 }
 
 .service-row:hover {
   background: rgba(255, 60, 60, 0.07);
   border-color: rgba(200, 40, 40, 0.3);
+}
+
+.service-row > * {
+  position: relative;
+  z-index: 1;
 }
 
 .service-name {
@@ -167,10 +196,10 @@ body {
 .brand-espn    { color: #E50914; }
 .brand-prime   { color: #00A8E1; }
 .brand-hbo     { color: #c084fc; }
-.brand-paramount { color: #60a5fa; }
+.brand-paramount { color: #ffffff; }
 .brand-crunchyroll { color: #F47521; }
 .brand-chatgpt { color: #10a37f; }
-.brand-capcut  { color: #ff3b30; }
+.brand-capcut  { color: #ffffff; }
 .brand-vix     { color: #e4003a; }
 .brand-plex    { color: #e5a00d; }
 .brand-iptv    { color: #3b82f6; }
@@ -183,33 +212,69 @@ body {
 .footer {
   margin-top: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
+  gap: 10px;
   position: relative;
   z-index: 2;
 }
 
-.telegram-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #229ED9, #0088cc);
-  color: #fff;
-  border-radius: 30px;
-  padding: 8px 22px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  box-shadow: 0 0 16px rgba(34, 158, 217, 0.35);
+.social-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 180, 180, 0.45);
+  letter-spacing: 4px;
+  text-transform: uppercase;
 }
 
-.phone {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #f87171;
-  letter-spacing: 2px;
+.social-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.social-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.2s;
+}
+
+.social-bubble:hover {
+  transform: translateY(-3px) scale(1.08);
+}
+
+.social-bubble svg {
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.social-bubble:hover svg {
+  background: rgba(255, 60, 60, 0.1);
+  border-color: rgba(200, 40, 40, 0.3);
+  box-shadow: 0 0 20px rgba(200, 30, 30, 0.15);
+}
+
+.social-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+.social-bubble:hover .social-label {
+  color: #fca5a5;
 }
 
 /* ===== Badge ===== */
@@ -337,7 +402,7 @@ body {
 }
 
 .modal-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.03);
 }
 
 .modal-btn:last-child {
@@ -362,4 +427,218 @@ body {
 
 .btn-telegram:hover {
   box-shadow: 0 6px 24px rgba(42, 171, 238, 0.5);
+}
+
+/* ==========================================================
+   RESPONSIVE – Tablets & Mobile
+   ========================================================== */
+
+@media (max-width: 768px) {
+  .poster {
+    padding: 20px 16px 22px;
+    border-radius: 14px;
+    margin: 10px;
+  }
+
+  .logo-img {
+    height: 90px;
+  }
+
+  .tagline {
+    font-size: 11px;
+    letter-spacing: 3px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .service-row {
+    padding: 8px 12px;
+    min-height: 44px;
+  }
+
+  .svc-label {
+    font-size: 13px;
+  }
+
+  .svc-sub {
+    font-size: 10px;
+  }
+
+  .price {
+    font-size: 15px;
+    min-width: 60px;
+  }
+
+  .badge {
+    top: 12px;
+    right: 14px;
+    padding: 3px 10px;
+    font-size: 9px;
+  }
+
+  .social-title {
+    font-size: 11px;
+  }
+
+  .social-bubble svg {
+    width: 42px;
+    height: 42px;
+    padding: 8px;
+  }
+
+  .social-label {
+    font-size: 10px;
+  }
+
+  .modal {
+    width: 90%;
+    max-width: 340px;
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .poster {
+    padding: 14px 10px 18px;
+    border-radius: 10px;
+    margin: 6px;
+  }
+
+  .logo-img {
+    height: 150px;
+  }
+
+  .tagline {
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 2px;
+  }
+
+  .divider {
+    margin-bottom: 10px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .service-row {
+    padding: 10px 12px;
+    min-height: 42px;
+    border-radius: 8px;
+  }
+
+  .svc-label {
+    font-size: 13px;
+  }
+
+  .svc-sub {
+    font-size: 10px;
+  }
+
+  .price {
+    font-size: 15px;
+    min-width: 55px;
+  }
+
+  .badge {
+    position: static;
+    display: inline-block;
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 9px;
+    padding: 3px 10px;
+  }
+
+  .header {
+    margin-bottom: 10px;
+  }
+
+  .footer {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .social-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+  }
+
+  .social-row {
+    gap: 14px;
+  }
+
+  .social-bubble svg {
+    width: 38px;
+    height: 38px;
+    padding: 7px;
+  }
+
+  .social-label {
+    font-size: 9px;
+  }
+
+  .modal {
+    width: 95%;
+    max-width: 300px;
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .modal-btn {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+
+  .modal-icon {
+    font-size: 28px;
+  }
+
+  .modal-title {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .poster {
+    padding: 10px 6px 14px;
+    margin: 4px;
+  }
+
+  .logo-img {
+    height: 120px;
+  }
+
+  .tagline {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+
+  .service-row {
+    padding: 8px 10px;
+    min-height: 38px;
+  }
+
+  .svc-label {
+    font-size: 12px;
+  }
+
+  .price {
+    font-size: 13px;
+    min-width: 48px;
+  }
+
+  .social-bubble svg {
+    width: 34px;
+    height: 34px;
+    padding: 6px;
+  }
+
+  .social-row {
+    gap: 12px;
+  }
 }
